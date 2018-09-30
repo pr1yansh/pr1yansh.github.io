@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1">
+    <title>MUSIC AND VOICE SEPARATION</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400i" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="image">
+            <img src="images/b1 - Copy.jpg" class="img-responsive image2">
+            <div class="container">
+                <div class="title">MUSIC AND VOICE SEPARATION</div>
+                <div class="section">
+                    <div class="text">
+                        Audio Processing has grown in importance a lot lately, with more emphasis on extracting useful parts from audio samples. The focus of this project is on the separation of vocal and music elements from any given song sample. We draw our inspiration from Karaoke and various other music mixing applications. The project was completed under the guidance of Dr. Prithwijit Guha (Dept of EEE), IIT Guwahati by a team consisting of four students, and headed by me.  
+                    </div>
+                    <div class = "text">
+                        The project explores the techniques of RPCA and REPET for voice and background music separation and various musical features for the characterisation of vocals and music. 
+                    </div>
+                    <div class = "text">
+                        Any given audio sample can be viewed as a combination of two different matrices, one a low-rank matrix and another a sparse matrix. The low-rank matrix has periodic properties with noise while the sparse matrix has aperiodic properties. The sparse matrix corresponds to the voice signal and the low-rank matrix to the music signal.
+                        We used .wav format audio files and passed it into the REPET classifier and then feed the result into the RPCA classifier to obtain the desired output.
+                    </div>
+                    <div class = "image3">
+                        <img src="images/project.jpg" alt="Block Diagram for Separation" class = "img-responsive"/>
+                    </div>
+                </div>
+                <div class = "section">
+                    <div class = "heading">REPET</div>
+                    <div class = "text">
+                        The classifier converts the audio spectrogram matrix into a sparse matrix and a low-rank matrix using the nearest neighbor filter and then solves the corresponding constraint inequality using the Lagrangian method. The REPET gives out two separated files: 'music.wav' and 'vocal.wav' but the results obtained were distorted to an extent. The 'music.wav' was of good quality but there were distortions in the 'vocal.wav' file. To remove such errors, the results were then passed into the RPCA classifier. 
+                    </div>
+
+                    <div class="heading">RPCA</div>
+                    <div class="text">
+                
+                        The RPCA first combines the two segments of the output to obtain the song.wav file back and then separates the audio into two matrices using the following procedure.
+                        <div>
+                            M is the combination of the vocal.wav and music.wav files from REPET. 
+                                <pre>   M=L0+S0</pre> 
+                                <pre>   where L0 is low-rank and S0 is sparse</pre>
+                            Here, both the components are of arbitrary magnitude. We do not know the low-dimensional column and row space of L0, not even their dimension. Similarly, we do not know the locations of the non-zero entries of S0, not even their number. The approach we use to solve the above condition is to consider S0 as noise (i.e. the amplitude as low) and if we stack all the data points as column vectors of a matrix M, the matrix should be low-rank approximately. Mathematically,
+                                <pre>   M=L0+N0</pre>
+                                <pre>   where L0 is low-rank and N0 is a small perturbation matrix.</pre>
+                            The Classical Principal Component Analysis seeks the best rank-k estimate of L0 by solving
+                                <pre>   Minimize ||M-L|| subject to rank (L) <=k</pre>
+                            <div>   
+                            This constraint is solved using the Singular Decomposition (SVD) method.
+                            </div>
+                            The RPCA considerably improved the quality of the vocals. But, because RPCA enhanced the vocal parts in the music segment as well to improve the overall quality, we take the final output of Music from REPET and Vocal from RPCA for our Project.
+                        </div>    
+                    </div>
+
+                    <div class = "heading">Conclusion</div>
+                    <div class = "text">
+                        There were slight distortions observed in the final outputs. We experimented by adding a Band-Pass filter at the end but it was eventually removed as it increased the distortions in the output. The final output of the project is 'vocal.wav' from RPCA and 'music.wav' from REPET.
+                        <h4>Important Links: </h4>
+                        <ul>
+                            <li><a href="https://drive.google.com/drive/folders/1VWfGnKLiQobVRDFs4DI0Y-xwhMEJ_mbA" target="_blank">Input and output .wav files</a></li>
+                            <li><a href="https://github.com/rajat-harlalka/Vocal-Music-Separation/tree/master/Code" target="_blank">Github link for code</a></li>
+                            <li><a href="http://ieeexplore.ieee.org/document/6287816/" target="_blank">Singing- Voice Separation from Monaural recording using Robust Principal Component Analysis</a></li>
+                            <li><a href="http://ieeexplore.ieee.org/document/6269059/" target="_blank">Repeating Pattern Extraction Technique (REPET): A simple method for Music/Voice Separation</a></li>
+                            <li><a href="http://ieeexplore.ieee.org/xpls/icp.jsp?arnumber=5332363" target="_blank">Sparse Representations in Audio and Music: from Coding to Source Separation</a></li>
+                            <li><a href="http://www.optimization-online.org/DB_HTML/2009/11/2447.html" target="_blank">Sparse and Low-Rank Matrix Decomposition via Alternating Direction Methods</a></li>
+                            <li><a href="https://drive.google.com/file/d/1Ik7CvBzwGztKbZO6Ko7ApD4bp2Wy_NtJ/view" target="_blank">A MATLAB Toolbox for Musical Feature Extraction from Audio</a></li>
+                        </ul>
+                        <div class = "text2">A project by Priyansh Daushalya, B.Tech Pre-Final Year, IIT Guwahati</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
